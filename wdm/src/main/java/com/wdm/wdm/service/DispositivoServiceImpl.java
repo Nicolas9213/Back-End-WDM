@@ -29,7 +29,10 @@ public class DispositivoServiceImpl implements DispositivoServiceInterface {
         Map<TipoDispositivo, List<Dispositivo>> dispositivosPorTipo = new HashMap<>();
 
         for (Dispositivo dispositivo : dispositivos) {
-            List<Dispositivo> dispositivoList = dispositivosPorTipo.get(dispositivo.getTipo());
+            List<Dispositivo> dispositivoList = new ArrayList<>();
+            if(dispositivosPorTipo.containsKey(dispositivo.getTipo())) {
+                dispositivoList = dispositivosPorTipo.get(dispositivo.getTipo());
+            }
             dispositivoList.add(dispositivo);
             dispositivosPorTipo.put(dispositivo.getTipo(), dispositivoList);
         }

@@ -51,9 +51,12 @@ public class SolicitacaoReservaServiceImpl implements SolicitacaoReservaServiceI
             }
                 data = data.plusDays(1);
             } while (data.isBefore(reservaDTO.getFim().plusDays(1)));
-            solicitacaoReserva.setReservas(reservas);
+            System.out.println(solicitacaoReserva);
             repository.save(solicitacaoReserva);
-            return solicitacaoReserva;
+            System.out.println(solicitacaoReserva);
+            solicitacaoReserva.setReservas(reservas);
+            System.out.println(solicitacaoReserva);
+            return repository.save(solicitacaoReserva);
         }
 
     private Reserva criarReserva(ReservaRequestPostDTO reservaDTO,

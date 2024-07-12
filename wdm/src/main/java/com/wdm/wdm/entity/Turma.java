@@ -17,7 +17,6 @@ public class Turma {
     private Long id;
     @Column(unique = true, length = 50, nullable = false)
     private String nome;
-
     public Turma(Long idTurma) {
     }
 }
