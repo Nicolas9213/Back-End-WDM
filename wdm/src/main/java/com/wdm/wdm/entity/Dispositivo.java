@@ -8,7 +8,6 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @RequiredArgsConstructor
-@AllArgsConstructor
 @Entity
 public class Dispositivo {
     @Id

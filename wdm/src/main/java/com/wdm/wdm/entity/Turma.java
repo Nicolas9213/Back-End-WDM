@@ -1,15 +1,12 @@
 package com.wdm.wdm.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 @NoArgsConstructor
 @Data
-@AllArgsConstructor
 @Entity
+@RequiredArgsConstructor
 public class Turma {
     @Id
     @NonNull
@@ -17,6 +14,4 @@ public class Turma {
     private Long id;
     @Column(unique = true, length = 50, nullable = false)
     private String nome;
-    public Turma(Long idTurma) {
-    }
 }

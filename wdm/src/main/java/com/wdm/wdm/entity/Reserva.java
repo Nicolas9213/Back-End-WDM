@@ -1,9 +1,11 @@
 package com.wdm.wdm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,7 +13,6 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
-@AllArgsConstructor
 @Entity
 public class Reserva {
     @Id
@@ -38,6 +39,8 @@ public class Reserva {
     private LocalDate dia;
     @ManyToOne
     @JoinColumn(nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private SolicitacaoReserva solicitacao;
     private String comentario;
 }

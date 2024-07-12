@@ -33,19 +33,20 @@ public class SolicitacaoReservaServiceImpl implements SolicitacaoReservaServiceI
                 reservaDTO.getIdDispositivos());
 
         Set<TipoDispositivo> tipos = dispositivos.keySet();
-
         List<Reserva> reservas = new ArrayList<>();
+        solicitacaoReserva.setReservas(reservas);
         LocalDate data = reservaDTO.getInicio();
-
 
         do {
             for (PeriodoReservaRequestPostDTO periodoDTO : reservaDTO.getIdPeriodos()) {
                 DayOfWeek diaDaSemana = data.getDayOfWeek();
                 if (periodoDTO.getDiaSemana().ordinal() == diaDaSemana.ordinal()) {
                     for (TipoDispositivo tipo : tipos) {
-                        Reserva reserva = criarReserva(reservaDTO, periodoDTO,
-                                data, dispositivos.get(tipo));
+                        Reserva reserva = criarReserva(reservaDTO, periodoDTO, data, solicitacaoReserva);
                         reservas.add(reserva);
+                        repository.save(solicitacaoReserva);
+                        criarDispositivosReservados(dispositivos, reserva, tipo);
+                        repository.save(solicitacaoReserva);
                     }
                 }
             }
@@ -57,20 +58,26 @@ public class SolicitacaoReservaServiceImpl implements SolicitacaoReservaServiceI
             solicitacaoReserva.setReservas(reservas);
             System.out.println(solicitacaoReserva);
             return repository.save(solicitacaoReserva);
+//            criarSolicitacaoReserva(dispositivos, solicitacaoReserva);
         }
 
     private Reserva criarReserva(ReservaRequestPostDTO reservaDTO,
                                  PeriodoReservaRequestPostDTO periodoDTO, LocalDate data,
-                                 List<Dispositivo> dispositivos) {
+                                 SolicitacaoReserva solicitacaoReserva) {
         Reserva reserva = new Reserva();
+        reserva.setSolicitacao(solicitacaoReserva);
         reserva.setSolicitante(new Usuario(reservaDTO.getIdUsuario()));
         reserva.setDia(data);
         reserva.setPeriodo(new Periodo(periodoDTO.getIdPeriodo()));
         reserva.setAmbiente(new Ambiente(periodoDTO.getIdAmbiente()));
         reserva.setTurma(new Turma(reservaDTO.getIdTurma()));
-        reserva.setDispositivoReservados(
-                dispositivos.stream().map(
-                        DispositivoReservado :: new).toList());
+
         return reserva;
+    }
+    private void criarDispositivosReservados(Map<TipoDispositivo, List<Dispositivo>> dispositivos,
+                                             Reserva reserva, TipoDispositivo tipo) {
+            reserva.setDispositivoReservados(dispositivos.get(tipo).stream().map(dispositivo ->
+                    new DispositivoReservado(dispositivo, reserva)).toList());
+        System.out.println(reserva);
     }
 }

@@ -8,15 +8,12 @@ import lombok.*;
 
 @NoArgsConstructor
 @Data
-@AllArgsConstructor
 @Entity
+@RequiredArgsConstructor
 public class Ambiente {
     @Id
     @NonNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
-
-    public Ambiente(Long idAmbiente) {
-    }
 }

@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Data
-@AllArgsConstructor
 @Entity
 public class Manutencao {
     @Id

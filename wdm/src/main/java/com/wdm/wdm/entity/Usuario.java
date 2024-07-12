@@ -1,5 +1,6 @@
 package com.wdm.wdm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,8 +8,8 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
-@AllArgsConstructor
 @Entity
+@RequiredArgsConstructor
 public class Usuario {
     @Id
     @NonNull
@@ -22,13 +23,11 @@ public class Usuario {
     private String senha;
     private Boolean habilitado;
     @OneToMany(mappedBy = "solicitante")
+    @JsonIgnore
     private List<Reserva> reservas;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoUsuario tipo;
     @OneToMany(mappedBy = "usuario")
     private List<GrupoDispositivo> gruposDispositivos;
-
-    public Usuario(Long idUsuario) {
-    }
 }

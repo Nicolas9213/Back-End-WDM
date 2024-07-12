@@ -10,7 +10,6 @@ import java.util.List;
 
 @NoArgsConstructor
 @Data
-@AllArgsConstructor
 @Entity
 public class GrupoDispositivo {
     @Id
