@@ -24,6 +24,8 @@ public class SolicitacaoReserva {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_solicitacao")
     private List<Reserva> reservas;
+    @ManyToOne
+    private Usuario solicitante;
 
     public SolicitacaoReserva(SolicitacaoReservaRequestPostDTO dto, Map<TipoDispositivo,
             List<Dispositivo>> dispositivos) {
@@ -31,6 +33,7 @@ public class SolicitacaoReserva {
         Set<TipoDispositivo> tipos = dispositivos.keySet();
         List<Reserva> reservas = new ArrayList<>();
         this.setReservas(reservas);
+        this.setSolicitante(new Usuario(dto.idUsuario()));
         LocalDate data = dto.inicio();
 
         do {
@@ -72,7 +75,7 @@ public class SolicitacaoReserva {
             }
             Periodo periodo;
             Ambiente ambiente;
-            String diaSemana;
+            String diaSemana = "";
             for (DispositivoReservado dispositivoReservado : reserva1.getDispositivoReservados()) {
                 dispositivos.add(dispositivoReservado.getDispositivo());
             }
@@ -84,9 +87,10 @@ public class SolicitacaoReserva {
                     break;
                 }
             }
+            periodosDTO.add(periodo, ambiente, diaSemana);
         }
         return new SolicitacaoResponseDTO(
-                reserva.getSolicitante(),
+                this.solicitante,
                 new ArrayList<>(dispositivos),
                 reserva.getTurma(),
                 periodosDTO,

@@ -18,9 +18,9 @@ public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long numero;
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Usuario solicitante;
+//    @ManyToOne
+//    @JoinColumn(nullable = false)
+//    private Usuario solicitante;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_reserva")
     private List<DispositivoReservado> dispositivoReservados;
@@ -42,7 +42,6 @@ public class Reserva {
     public Reserva(SolicitacaoReservaRequestPostDTO reservaDTO,
                    PeriodoReservaRequestPostDTO periodoDTO, LocalDate data,
                    List<DispositivoReservado> dispositivos) {
-        this.setSolicitante(new Usuario(reservaDTO.idUsuario()));
         this.setDia(data);
         this.setPeriodo(new Periodo(periodoDTO.idPeriodo()));
         this.setAmbiente(new Ambiente(periodoDTO.idAmbiente()));
@@ -51,7 +50,7 @@ public class Reserva {
     }
 
     public ReservaResponseDTO toDTO() {
-        return new ReservaResponseDTO(this.numero,this.solicitante.getNome(),this.dispositivoReservados,
+        return new ReservaResponseDTO(this.numero,this.dispositivoReservados,
                 this.status.getNOME(),this.ambiente,this.turma,this.periodo,this.dia, this.comentario);
     }
 }
