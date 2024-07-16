@@ -1,9 +1,11 @@
 package com.wdm.wdm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -17,5 +19,6 @@ public class TipoDispositivo {
     @Column(nullable = false, unique = true, length = 50)
     private String nome;
     @OneToMany(mappedBy = "tipo")
+    @ToString.Exclude
     List<Dispositivo> dispositivos;
 }

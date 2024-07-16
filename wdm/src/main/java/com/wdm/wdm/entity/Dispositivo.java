@@ -1,11 +1,13 @@
 package com.wdm.wdm.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @RequiredArgsConstructor
 @Entity
@@ -24,9 +26,11 @@ public class Dispositivo {
     @Column(nullable = false, length = 50)
     private String modelo;
     @OneToMany(mappedBy = "dispositivo")
+    @JsonIgnore
+    @ToString.Exclude
     private List<DispositivoReservado> reservasDoDispositivo;
     @OneToMany(mappedBy = "dispositivo")
-    private List<Manutencao> manutencoes;
+    private List<Manutencao> manutencao;
     private String descricao;
     private Boolean habilitado = true;
 }

@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @Entity
+@AllArgsConstructor
+@RequiredArgsConstructor
 public class DispositivoReservado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,15 +20,15 @@ public class DispositivoReservado {
     @NonNull
     @ManyToOne
     @JoinColumn(nullable = false)
+    @ToString.Exclude
+    @JsonIgnore
     private Dispositivo dispositivo;
     private LocalDateTime retirada;
     private LocalDateTime devolucao;
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    @NonNull
-    @ToString.Exclude
-    @JsonIgnore
-    private Reserva reserva;
-    public DispositivoReservado(Dispositivo dispositivo, Reserva reserva) {
-    }
+//    @ManyToOne
+//    @JoinColumn(nullable = false)
+//    @NonNull
+//    @ToString.Exclude
+//    @JsonIgnore
+//    private Reserva reserva;
 }
