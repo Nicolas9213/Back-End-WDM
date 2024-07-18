@@ -45,5 +45,6 @@ public class SolicitacaoReservaServiceImpl implements SolicitacaoReservaServiceI
         Page<SolicitacaoReserva> solicitacoes = repository.findAll(pageable);
         Page<SolicitacaoResponseDTO> response;
         return solicitacoes.map(solicitacao -> solicitacao.toOtherDTO());
+
     }
 }
